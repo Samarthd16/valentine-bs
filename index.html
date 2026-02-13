@@ -54,6 +54,18 @@
 
   <script type="module">
     import confetti from 'https://cdn.skypack.dev/canvas-confetti';
+    
+    // Music setup
+    const backgroundMusic = document.getElementById('backgroundMusic');
+    
+    // Try to play immediately
+    backgroundMusic.play().catch(error => console.log('Autoplay blocked'));
+    
+    // Ensure music plays on first click if browser blocked autoplay
+    function startMusic() {
+      backgroundMusic.play().catch(error => console.log('Play failed'));
+    }
+    
     const yesButton = document.getElementById('yesButton');
     const noButton = document.getElementById('noButton');
     const imageDisplay = document.getElementById('imageDisplay');
@@ -100,6 +112,7 @@
     });
 
     noButton.addEventListener('click', function() {
+      startMusic(); // Start background music on button click
       if (noClickCount < 5) {
         noClickCount++;
         imageDisplay.src = imagePaths[noClickCount];
@@ -116,6 +129,7 @@
     });
   
     yesButton.addEventListener('click', () => {
+      startMusic(); // Start background music on button click
       imageDisplay.src = './images/image7.gif'; // Change to image7.gif
       valentineQuestion.textContent = "Yayyy!! :3"; // Change the question text
       responseButtons.style.display = 'none'; // Hide both buttons
